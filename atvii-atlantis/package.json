@@ -1,4 +1,14 @@
 {
+  "name": "atvii-atlantis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/js//app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx ts-node src/ts/app/app.ts"
+  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "@types/node": "^18.0.0",
     "@types/prompt-sync": "^4.1.1",
