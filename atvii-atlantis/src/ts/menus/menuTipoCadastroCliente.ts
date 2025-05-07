@@ -8,6 +8,7 @@ export default class MenuTipoCadastroCliente implements Menu {
         console.log(`----------------------`)
         console.log(`| 1 - Titular`)
         console.log(`| 2 - Dependente`)
+        console.log(`| 0 - Voltar`)
         console.log(`----------------------`)
     }
 }

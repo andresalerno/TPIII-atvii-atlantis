@@ -1,11 +1,14 @@
 import Processo from "../abstracoes/processo";
 import MenuTipoCadastroCliente from "../menus/menuTipoCadastroCliente";
 import CadastroClienteTitular from "./cadastroClienteTitular";
+import Principal from "./tipoEdicaoCliente";
 
 export default class TipoCadastroCliente extends Processo {
-    constructor() {
+    private processoAnterior: Processo | null;
+    constructor(processoAnterior: Processo | null = null) {
         super()
-        this.menu = new MenuTipoCadastroCliente()
+        this.menu = new MenuTipoCadastroCliente();
+        this.processoAnterior = processoAnterior;
     }
     processar(): void {
         this.menu.mostrar()
@@ -16,6 +19,15 @@ export default class TipoCadastroCliente extends Processo {
                 this.processo = new CadastroClienteTitular()
                 this.processo.processar()
                 break
+                case 0:
+                    // Voltar para o processo anterior (Principal)
+                    if (this.processoAnterior) {
+                        this.processoAnterior.processar();
+                    } else {
+                        this.processo = new Principal(); // Volta para o menu principal
+                        this.processo.processar();
+                    }
+                    break;
             default:
                 console.log('Opção não entendida :(')
         }
