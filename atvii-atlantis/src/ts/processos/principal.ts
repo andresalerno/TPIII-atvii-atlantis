@@ -3,6 +3,7 @@ import MenuPrincipal from "../menus/menuPricipal"
 import TipoCadastroCliente from "./tipoCadastroCliente"
 import TipoListagemClientes from "./tipoListagemClientes"
 import TipoEdicaoCliente from "./tipoEdicaoCliente"
+import ExcluirCliente from "./excluirClienteTitular"
 
 export default class Principal extends Processo {
     constructor() {
@@ -23,8 +24,13 @@ export default class Principal extends Processo {
             case 2:
                 this.processo = new TipoEdicaoCliente()
                 this.processo.processar()
+                break
             case 3:
-                this.processo = new TipoListagemClientes()
+                this.processo = new TipoListagemClientes(this)
+                this.processo.processar()
+                break
+            case 4:
+                this.processo = new ExcluirCliente()
                 this.processo.processar()
                 break
             case 0:

@@ -1,6 +1,7 @@
 // principal.ts (atualizado)
 import Processo from "../abstracoes/processo";
 import MenuPrincipal from "../menus/menuPricipal";
+import EditarCliente from "./editarClienteTitular";
 import TipoCadastroCliente from "./tipoCadastroCliente";
 import TipoEdicaoCliente from "./tipoEdicaoCliente";
 
@@ -17,7 +18,7 @@ export default class Principal extends Processo {
 
         switch (this.opcao) {
             case 2:
-                this.processo = new TipoEdicaoCliente();  // Chamando a edição
+                this.processo = new EditarCliente();  // Chamando a edição
                 this.processo.processar();
                 break;
             default:

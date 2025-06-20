@@ -1,19 +1,19 @@
 import Impressor from "../interfaces/impressor";
 import Documento from "../modelos/documento";
 
-export default class ImpressorDocumento implements Impressor {
-    private documento: Documento
+export default class ImpressorDocumentos implements Impressor {
+    private documentos: Documento[];
 
-    constructor(documento: Documento) {
-        this.documento = documento
+    constructor(documentos: Documento[]) {
+        this.documentos = documentos;
     }
 
-    imprimir(): string {
-        let impressao = `| Documento:\n`
-            + `| Tipo: ${this.documento.Tipo}\n`
-            + `| Data expedição: ${this.documento.DataExpedicao.toLocaleDateString()}\n`
-            + `| Número: ${this.documento.Numero}`
-        return impressao
+    imprimir(): object[] {
+        // Retornando um array de objetos, onde cada objeto representa um documento
+        return this.documentos.map(doc => ({
+            Tipo: doc.Tipo,
+            DataExpedicao: doc.DataExpedicao.toLocaleDateString(),
+            Numero: doc.Numero
+        }));
     }
-
 }

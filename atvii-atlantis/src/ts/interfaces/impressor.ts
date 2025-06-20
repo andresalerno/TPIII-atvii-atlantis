@@ -1,3 +1,3 @@
 export default interface Impressor {
-    imprimir(): string
+    imprimir(): object | object[] | null | void; // Alterado para permitir retorno de void
 }

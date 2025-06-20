@@ -5,39 +5,51 @@ import CadastrarDocumentosCliente from "./cadastrarDocumentosCliente";
 import CadastroEnderecoTitular from "./cadastroEnderecoTitular";
 
 export default class CadastroDependente extends Processo {
-    private titular: Cliente;
-
-    constructor(titular: Cliente) {
-        super();
-        this.titular = titular;  // O dependente será associado a um titular
-    }
+    private titular!: Cliente;
 
     processar(): void {
-        console.log('Iniciando o cadastro de um novo dependente...');
+        let armazem = Armazem.InstanciaUnica;
 
-        // Coletando dados do dependente
+        // Listar titulares (clientes sem titular)
+        const titulares = armazem.Clientes.filter(c => c.Titular === null);
+
+        if (titulares.length === 0) {
+            console.log("Não há titulares cadastrados para associar dependentes.");
+            return;
+        }
+
+        console.log("Selecione o titular para o novo dependente:");
+        titulares.forEach((titular, i) => {
+            console.log(`${i} - ${titular.Nome} (${titular.NomeSocial})`);
+        });
+
+        let idx = this.entrada.receberNumero("Digite o número do titular:");
+
+        if (idx < 0 || idx >= titulares.length) {
+            console.log("Número inválido. Cancelando cadastro de dependente.");
+            return;
+        }
+
+        this.titular = titulares[idx];
+
+        // Dados do dependente
         let nome = this.entrada.receberTexto('Qual o nome do dependente?');
         let nomeSocial = this.entrada.receberTexto('Qual o nome social do dependente?');
         let dataNascimento = this.entrada.receberData('Qual a data de nascimento do dependente?');
 
-        // Criando o cliente dependente
         let dependente = new Cliente(nome, nomeSocial, dataNascimento);
 
-        // Associando o dependente ao titular
         dependente.Titular = this.titular;
+        this.titular.Dependentes.push(dependente);
 
-        // Processo de cadastro do endereço (reutilizando a lógica do titular)
         this.processo = new CadastroEnderecoTitular(dependente);
         this.processo.processar();
 
-        // Processo de cadastro de documentos (reutilizando a lógica do titular)
         this.processo = new CadastrarDocumentosCliente(dependente);
         this.processo.processar();
 
-        // Armazenando o dependente
-        let armazem = Armazem.InstanciaUnica;
         armazem.Clientes.push(dependente);
 
-        console.log('Finalizando o cadastro do dependente...');
+        console.log('Dependente cadastrado com sucesso!');
     }
 }

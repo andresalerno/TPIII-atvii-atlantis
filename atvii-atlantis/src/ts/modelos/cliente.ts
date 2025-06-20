@@ -8,10 +8,10 @@ export default class Cliente {
     private dataNascimento: Date
     private dataCadastro: Date
     private telefones: Telefone[] = []
-    private endereco!: Endereco
+    private endereco: Endereco | null = null
     private documentos: Documento[] = []
     private dependentes: Cliente[] = []
-    private titular!: Cliente
+    private titular: Cliente | null = null
 
     constructor(nome: string, nomeSocial: string, dataNascimento: Date) {
         this.nome = nome
@@ -25,10 +25,19 @@ export default class Cliente {
     public get DataNascimento() { return this.dataNascimento }
     public get DataCadastro() { return this.dataCadastro }
     public get Telefones() { return this.telefones }
-    public get Endereco() { return this.endereco }
+    public get Endereco() { 
+        if (this.endereco === null) {
+            throw new Error("Endereco is null");
+        }
+        return this.endereco; 
+    }
     public get Documentos() { return this.documentos }
     public get Dependentes() { return this.dependentes }
     public get Titular() { return this.titular }
 
-    public set Endereco(endereco: Endereco) { this.endereco = endereco }
+    public set Nome(nome: string) { this.nome = nome }
+    public set NomeSocial(nomeSocial: string) { this.nomeSocial = nomeSocial }
+    public set DataNascimento(dataNascimento: Date) { this.dataNascimento = dataNascimento }
+    public set Endereco(endereco: Endereco | null) { this.endereco = endereco }
+    public set Titular(titular: Cliente | null) { this.titular = titular; }
 }
